@@ -8,12 +8,12 @@ using WebAPIClient.Models;
 
 namespace WebAPIClient.Controllers {
     [ApiController]
-    [Route("v1/repositories")]
+    [Route("repositories")]
     public class RepositoryController : ControllerBase {
         private static readonly HttpClient client = new HttpClient();
 
         [HttpGet]
-        [Route("{company:string}")]
+        [Route("{company}")]
         private async Task<List<Repository>> ProcessRepositories(string company)
         {
             client.DefaultRequestHeaders.Accept.Clear();
@@ -21,10 +21,10 @@ namespace WebAPIClient.Controllers {
                 new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var task = client.GetStreamAsync($"https://api.github.com/orgs/{company}/repos");
-            var result = await JsonSerializer.DeserializeAsync<List<Repository>>(await task);
+            var streamTask = client.GetStreamAsync($"https://api.github.com/orgs/{company}/repos");
+            var repositories = await JsonSerializer.DeserializeAsync<List<Repository>>(await streamTask);
 
-            return result;
+            return repositories;
         }
 
     }
