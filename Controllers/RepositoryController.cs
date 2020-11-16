@@ -13,15 +13,15 @@ namespace WebAPIClient.Controllers {
         private static readonly HttpClient client = new HttpClient();
 
         [HttpGet]
-        [Route("{company}")]
-        private async Task<List<Repository>> ProcessRepositories(string companyName)
+        [Route("{company:string}")]
+        private async Task<List<Repository>> ProcessRepositories(string company)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var task = client.GetStreamAsync($"https://api.github.com/orgs/{companyName}/repos");
+            var task = client.GetStreamAsync($"https://api.github.com/orgs/{company}/repos");
             var result = await JsonSerializer.DeserializeAsync<List<Repository>>(await task);
 
             return result;
