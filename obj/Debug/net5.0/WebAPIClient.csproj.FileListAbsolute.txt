@@ -27,3 +27,4 @@ C:\Users\WesleyDaSilva\Documents\GitHub\WebAPIClient\obj\Debug\net5.0\WebAPIClie
 C:\Users\WesleyDaSilva\Documents\GitHub\WebAPIClient\obj\Debug\net5.0\ref\WebAPIClient.dll
 C:\Users\WesleyDaSilva\Documents\GitHub\WebAPIClient\obj\Debug\net5.0\WebAPIClient.pdb
 C:\Users\WesleyDaSilva\Documents\GitHub\WebAPIClient\obj\Debug\net5.0\WebAPIClient.genruntimeconfig.cache
+C:\Users\WesleyDaSilva\Documents\GitHub\WebAPIClient\bin\Debug\net5.0\System.Text.Json.dll

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,9 +13,8 @@ namespace WebAPIClient
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            await ProcessRepositories();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -23,10 +24,5 @@ namespace WebAPIClient
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-        
-        private static async Task ProcessRepositories()
-        {
-
-        }
     }
 }
