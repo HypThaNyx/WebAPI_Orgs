@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uWLLytx1gBE/TPiRtLxRkr2s8hMxkI1v0hkK//HxxxTqbqf5kpWS6IApmj302rKqmvzOlhRsvrMrAiptSZFikw==",
+  "dgSpecHash": "ROIYpCAM8UX5u47k2iBiNvGjuXoJPbjRNC9j1Io6QOU+XMcakX+IbbsBfNIjNZ61UXL/Dgi9smnQvhQEhSHlng==",
   "success": true,
   "projectFilePath": "C:\\Users\\WesleyDaSilva\\Documents\\GitHub\\WebAPIClient\\WebAPIClient.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,8 @@
     "C:\\Users\\WesleyDaSilva\\.nuget\\packages\\swashbuckle.aspnetcore\\5.5.1\\swashbuckle.aspnetcore.5.5.1.nupkg.sha512",
     "C:\\Users\\WesleyDaSilva\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.5.1\\swashbuckle.aspnetcore.swagger.5.5.1.nupkg.sha512",
     "C:\\Users\\WesleyDaSilva\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.5.1\\swashbuckle.aspnetcore.swaggergen.5.5.1.nupkg.sha512",
-    "C:\\Users\\WesleyDaSilva\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.5.1\\swashbuckle.aspnetcore.swaggerui.5.5.1.nupkg.sha512"
+    "C:\\Users\\WesleyDaSilva\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.5.1\\swashbuckle.aspnetcore.swaggerui.5.5.1.nupkg.sha512",
+    "C:\\Users\\WesleyDaSilva\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -41,6 +41,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.5.1, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [

@@ -11,8 +11,9 @@ namespace WebAPIClient
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
+            await ProcessRepositories();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -22,5 +23,10 @@ namespace WebAPIClient
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        
+        private static async Task ProcessRepositories()
+        {
+
+        }
     }
 }
