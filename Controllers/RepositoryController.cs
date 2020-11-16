@@ -14,7 +14,7 @@ namespace WebAPIClient.Controllers {
 
         [HttpGet]
         [Route("{company}")]
-        private async Task<List<Repository>> ProcessRepositories(string company)
+        public async Task<List<Repository>> ProcessRepositories(string company)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
