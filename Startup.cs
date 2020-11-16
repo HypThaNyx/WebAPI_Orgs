@@ -28,6 +28,7 @@ namespace WebAPIClient
         {
 
             services.AddControllers();
+            services.AddMemoryCache();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIClient", Version = "v1" });
