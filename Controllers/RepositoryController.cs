@@ -13,20 +13,19 @@ namespace WebAPIClient.Controllers {
     [ApiController]
     [Route("repositories")]
     public class RepositoryController : ControllerBase {
-        private IFeatureManager featureManager;
-        private readonly IMemoryCache _cache;
-        public RepositoryController(IMemoryCache cache)
+        private IFeatureManager _featureManager;
+        public RepositoryController(IFeatureManager featureManager)
         {
-            _cache = cache;
+            _featureManager = featureManager;
         }
 
         private static readonly HttpClient client = new HttpClient();
 
         [HttpGet]
         [Route("{company}")]
-        public async Task<List<Repository>> ProcessRepositories(string company)
+        public async Task<List<Repository>> ProcessRepositoriesWithCache(string company, [FromServices] IMemoryCache _cache)
         {
-            if (await featureManager.IsEnabledAsync("CacheFeatureFlag"))
+            if (await _featureManager.IsEnabledAsync("CacheFeatureFlag"))
             {
                 var cacheEntry = await _cache.GetOrCreateAsync(company, async entry =>
                 {
@@ -40,22 +39,12 @@ namespace WebAPIClient.Controllers {
             else return await ListRepositoriesByName(company);            
         }
 
-        [HttpGet]
-        [Route("")]
-        public async Task<List<Repository>> ProcessRepositoriesByBody([FromBody] Organization org)
+        /*[HttpGet]
+        [Route("{company}")]
+        public async Task<List<Repository>> ProcessRepositories(string company)
         {
-            if (await featureManager.IsEnabledAsync("CacheFeatureFlag"))
-            {
-                var cacheEntry = await _cache.GetOrCreateAsync(org.company, async entry =>
-                {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
-                    entry.SetPriority(CacheItemPriority.High);
-                    
-                    return await ListRepositoriesByName(org.company);
-                });            
-                return cacheEntry;
-            } else return await ListRepositoriesByName(org.company);
-        }
+            return await ListRepositoriesByName(company);
+        }*/
 
         private async Task<List<Repository>> ListRepositoriesByName(string companyName)
         {
