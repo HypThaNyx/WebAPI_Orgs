@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using WebAPIClient.Models;
 using Microsoft.FeatureManagement;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAPIClient.Controllers {
     [ApiController]
     [Route("repositories")]
     public class RepositoryController : ControllerBase {
         private IFeatureManager _featureManager;
+
         public RepositoryController(IFeatureManager featureManager)
         {
             _featureManager = featureManager;
@@ -23,22 +25,27 @@ namespace WebAPIClient.Controllers {
 
         [HttpGet]
         [Route("{company}")]
-        public async Task<List<Repository>> ProcessRepositoriesWithCache(string company, [FromServices] IMemoryCache _cache)
+        public async Task<List<Repository>> ProcessRepositoriesWithCache(
+            string company,
+            [FromServices] IMemoryCache _cache,
+            [FromServices] IConfiguration _config)
         {
+            float cacheExpirationTime = 
+                float.Parse(_config.GetSection("MySettings")
+                .GetSection("CacheExpirationTimeInSeconds").Value);
+
             if (await _featureManager.IsEnabledAsync("CacheFeatureFlag"))
             {
                 var cacheEntry = await _cache.GetOrCreateAsync(company, async entry =>
                 {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60);
+                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(cacheExpirationTime);
                     entry.SetPriority(CacheItemPriority.High);
                     
                     return await ListRepositoriesByName(company);
                 });
                 return cacheEntry;
                 
-            } else return await ListRepositoriesByName(company);
-
-                 
+            } else return await ListRepositoriesByName(company);                 
         }
 
         /*[HttpGet]
