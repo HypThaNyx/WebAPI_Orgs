@@ -29,14 +29,16 @@ namespace WebAPIClient.Controllers {
             {
                 var cacheEntry = await _cache.GetOrCreateAsync(company, async entry =>
                 {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
+                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60);
                     entry.SetPriority(CacheItemPriority.High);
                     
                     return await ListRepositoriesByName(company);
                 });
                 return cacheEntry;
-            }
-            else return await ListRepositoriesByName(company);            
+                
+            } else return await ListRepositoriesByName(company);
+
+                 
         }
 
         /*[HttpGet]
