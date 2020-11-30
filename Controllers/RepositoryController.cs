@@ -1,24 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using WebAPIClient.Models;
 using Microsoft.FeatureManagement;
 using Microsoft.Extensions.Configuration;
+using WebAPIClient.Models;
+using WebAPIClient.Services;
 
 namespace WebAPIClient.Controllers {
     [ApiController]
     [Route("repositories")]
     public class RepositoryController : ControllerBase {
         private IFeatureManager _featureManager;
+        private IRepositoryService _service;
 
-        public RepositoryController(IFeatureManager featureManager)
+        public RepositoryController(
+            IFeatureManager featureManager,
+            IRepositoryService service)
         {
             _featureManager = featureManager;
+            _service = service;
         }
 
         private static readonly HttpClient client = new HttpClient();
@@ -41,31 +44,11 @@ namespace WebAPIClient.Controllers {
                     entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(cacheExpirationTime);
                     entry.SetPriority(CacheItemPriority.High);
                     
-                    return await ListRepositoriesByName(company);
+                    return await _service.ListRepositoriesByCompanyName(company);
                 });
                 return cacheEntry;
                 
-            } else return await ListRepositoriesByName(company);                 
+            } else return await _service.ListRepositoriesByCompanyName(company);                 
         }
-
-        /*[HttpGet]
-        [Route("{company}")]
-        public async Task<List<Repository>> ProcessRepositories(string company)
-        {
-            return await ListRepositoriesByName(company);
-        }*/
-
-        private async Task<List<Repository>> ListRepositoriesByName(string companyName)
-        {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-            var streamTask = client.GetStreamAsync($"https://api.github.com/orgs/{companyName}/repos");
-            var repositories = await JsonSerializer.DeserializeAsync<List<Repository>>(await streamTask);
-            return repositories;
-        }
-
     }
 }
